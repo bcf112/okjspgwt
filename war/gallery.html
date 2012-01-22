@@ -9,9 +9,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	var showImage = function(e) {
-		console.log(e);
 		var imgId = "#im"+e.currentTarget.id;
-		console.log();
 		
 		$("#big li").hide();
 		$(imgId).show("slow");
@@ -50,6 +48,7 @@
 	        			);
 
 	        	$("#big li").hide();
+	        	$("#img0").show("slow");
 		    }
 		});
 		return false;
