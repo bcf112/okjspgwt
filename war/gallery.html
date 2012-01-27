@@ -36,9 +36,13 @@
 		        	big += "<li id=\"img"+i+"\"><img src=\""+ list[i].image +"\"><br />"+
 		        	 "from: <a href=\""+list[i].link+"\" target=\"_blank\">"+list[i].link+"</a></li>";
 		        }
+		        if (list.length === 10) {
+		        	html += "<li><input class=\"go\" type=\"button\" value=\">>>\"></li>";
+		        }
 	        	$("ul#small").html(html);
 	        	$("ul#big").html(big);
-	        	
+	    		$(".go").click(search);
+
 	        	$("#pageno").val(parseInt($("#pageno").val())+1);
 
 	        	$("#small li").bind("click", showImage);
@@ -57,6 +61,11 @@
 	$(function() {
 		$("#go").click(search);
 		$("#q").bind("change", function(){$("#pageno").val(1);});
+		$("#q").live("keypress", function(event) {
+			if (event.which === 13) {
+				search();
+			}
+		})
 	});
 </script>
 <style type="text/css">
@@ -79,6 +88,14 @@ img {
 #pageno {
 	text-align: center;
 	width: 40px;
+}
+.go {
+	height: 60px;
+	margin: 5px;
+	padding: 3px;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 5px;
+	float: right;
 }
 </style>
 </head>
