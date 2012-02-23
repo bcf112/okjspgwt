@@ -7,6 +7,8 @@
 	rel="stylesheet" type="text/css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="./fotorama.css">
+<script type="text/javascript" src="./fotorama.js"></script>
 <script type="text/javascript">
 	var showImage = function(e) {
 		var imgId = "#im"+e.currentTarget.id;
@@ -21,38 +23,24 @@
 		    type : "post",
 		    jsonp : "callback",
 		    data : {
-		        apikey : "3803541fce89370275fcefe628ed9f9acafe223e",        // API KEY
-		        q : $("#q").val(),             // 검색어
-		        result : "10",                 // 한페이지에 출력될 결과수
-		        pageno : $("#pageno").val(),   // 페이지번호
-		        output : "json"                // JSONP 형식으로 호출하기 때문에 결과값 포맷은 json
+		        apikey : "3803541fce89370275fcefe628ed9f9acafe223e", 
+		        q : $("#q").val(),             // search keyword
+		        result : "20",                 // result set length
+		        pageno : $("#pageno").val(),   // pageNo
+		        output : "json"                // JSONP type format json
 		    },
 		    success : function(r){
 		        var list = r.channel.item;
-		        var html = "";
-		        var big = "";
+		        var fr = "";
 		        for(var i in list) {
-		        	html += "<li id=\"g"+i+"\"><img src=\""+ list[i].thumbnail +"\"></li>"
-		        	big += "<li id=\"img"+i+"\"><img src=\""+ list[i].image +"\"><br />"+
-		        	 "from: <a href=\""+list[i].link+"\" target=\"_blank\">"+list[i].link+"</a></li>";
+		        	fr += "<a href=\""+ list[i].image +"\"><img src=\""+ list[i].thumbnail +"\"></a>";
 		        }
-		        if (list.length === 10) {
-		        	html += "<li><input class=\"go\" type=\"button\" value=\">>>\"></li>";
-		        }
-	        	$("ul#small").html(html);
-	        	$("ul#big").html(big);
-	    		$(".go").click(search);
-
+		        fr = "<div>" + fr + "</div>";
+	        	$("#fr").html(fr);
+	        	$("#fr div").fotorama({width:720,height:480});
+	        	
 	        	$("#pageno").val(parseInt($("#pageno").val())+1);
 
-	        	$("#small li").bind("click", showImage);
-	        	$("#small li").hover(
-	        			function(){$(this).children().css("border-color", "#f00")},
-	        			function(){$(this).children().css("border-color", "#ddd")}
-	        			);
-
-	        	$("#big li").hide();
-	        	$("#img0").show("slow");
 		    }
 		});
 		return false;
@@ -68,36 +56,7 @@
 		})
 	});
 </script>
-<style type="text/css">
-ul li {
-	display: inline;
-}
-img {
-	height: 60px;
-	margin: 5px;
-	padding: 3px;
-	border: 1px solid #ddd;
-	-webkit-border-radius: 5px;
-}
-#big img {
-	height: 70%;
-	margin: 5px;
-	border: 1px solid #ddd;
-	-webkit-border-radius: 5px;
-}
-#pageno {
-	text-align: center;
-	width: 40px;
-}
-.go {
-	height: 60px;
-	margin: 5px;
-	padding: 3px;
-	border: 1px solid #DDD;
-	-webkit-border-radius: 5px;
-	float: right;
-}
-</style>
+
 </head>
 <body>
 	<form onsubmit="return search()">
@@ -106,13 +65,9 @@ img {
 		<input id="go" type="button" value="Go">
 	</form>
 	<hr>
-	<ul id="small">
-		<li><img
-			src="http://t1.gstatic.com/images?q=tbn:ANd9GcQNKX1V8wohVDbq7CdGOMdDmL_RvHzCauAS34XWZ92SQNsmCjJHog">
-		</li>
-	</ul>
-	<ul id="big">
-	</ul>
+<div id="fr">
+</div>
+	
 	<div style="padding-left:46px">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-6888948265589071";
